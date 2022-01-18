@@ -1,0 +1,21 @@
+package com.senior.concurrence.disruptor.ch02;
+
+import com.lmax.disruptor.EventHandler;
+import com.lmax.disruptor.WorkHandler;
+
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
+public class MessageEventHandlerTo implements WorkHandler<Message> {
+
+    @Override
+    public void onEvent(Message message) throws Exception {
+        handle(message);
+    }
+
+    public void handle(Message message) throws Exception{
+        message.setTo(String.valueOf(ThreadLocalRandom.current().nextInt(10000, 100000)));
+        TimeUnit.MILLISECONDS.sleep(30);
+        System.out.println(System.currentTimeMillis() + " : " + Thread.currentThread().getName() + " MessageEventHandlerTo " + message);
+    }
+}

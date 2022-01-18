@@ -1,0 +1,131 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.djt.mapper.dao.EmployeeMapper">
+	
+	<resultMap type="com.djt.mapper.model.Employee" id="empRM">
+		<id property="empId" column="emp_id" />
+		<result property="empName" column="emp_name" />
+		<result property="gender" column="gender" />
+		<result property="address" column="address" />
+	</resultMap>
+	
+	<parameterMap type="java.util.Map" id="cntEmpMap">
+		<parameter property="gender" mode="IN" jdbcType="CHAR"/>
+		<parameter property="count" mode="OUT" jdbcType="INTEGER"/>
+	</parameterMap>
+	
+	<select id="findEmpById" resultMap="empRM">
+		select emp_id,emp_name,gender,address,dept_id from tbl_employee where emp_id=#{value}
+	</select>
+	
+	<select id="findEmpByDeptId" resultMap="empRM">
+		select emp_id,emp_name,gender,address,e.dept_id from tbl_employee e 
+			where e.dept_id=#{value}
+	</select>
+	
+	<insert id="createEmp">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="empId" keyColumn="emp_id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into tbl_employee(emp_name,gender,address) 
+			values(#{empName},#{gender},#{address})
+	</insert>
+	
+	<select id="countGender" parameterMap="cntEmpMap" statementType="CALLABLE">
+		call emp_gender_cnt(?,?)
+	</select>
+	
+	<select id="findEmpByNameAndGender" resultMap="empRM">
+		select emp_id,emp_name,gender,address,dept_id from tbl_employee
+			where emp_name like '%${param1}%' and gender=#{param2}
+	</select>
+	
+	<select id="findEmpByNameAndGender2" resultMap="empRM">
+		select emp_id,emp_name,gender,address,dept_id from tbl_employee
+			where emp_name like '%${name}%' and gender=#{gender}
+	</select>
+	
+	<select id="findEmpByDynamic" resultMap="empRM">
+		select emp_id,emp_name,gender,address,dept_id from tbl_employee
+		<!-- 
+		<trim prefix="where" prefixOverrides="AND | OR">
+			<if test="empName != null">
+				and emp_name like '%${empName}%'
+			</if>
+			<if test="address != null">
+				and address like '%${address}%'
+			</if>
+		</trim>
+		 -->
+		 <where>
+		 	<if test="empName != null">
+				and emp_name like '%${empName}%'
+			</if>
+			<if test="address != null">
+				and address like '%${address}%'
+			</if>
+		 </where>
+	</select>
+	
+	<delete id="deleteByBatch">
+		delete from tbl_employee where emp_id in
+		<foreach collection="list" open="(" separator="," close=")" item="emp">
+			#{emp.empId}
+		</foreach>
+	</delete>
+	
+	<insert id="createBatch">
+		insert into tbl_employee(emp_name,gender,address) values
+		<foreach collection="list" separator="," item="emp">
+			(#{emp.empName},#{emp.gender},#{emp.address})
+		</foreach>
+	</insert>
+	
+	<resultMap type="com.djt.mapper.model.Employee" id="empDeptRM">
+		<id property="empId" column="emp_id" />
+		<result property="empName" column="emp_name" />
+		<result property="gender" column="gender" />
+		<result property="address" column="address" />
+		<result property="dept.deptId" column="dept_id" />
+		<result property="dept.deptName" column="dept_name" />
+		<result property="dept.description" column="description" />
+	</resultMap>
+	
+	<resultMap type="com.djt.mapper.model.Employee" id="empDepAssoRM">
+		<id property="empId" column="emp_id" />
+		<result property="empName" column="emp_name" />
+		<result property="gender" column="gender" />
+		<result property="address" column="address" />
+		<association property="dept" javaType="com.djt.mapper.model.Department">
+			<result property="deptId" column="dept_id" />
+			<result property="deptName" column="dept_name" />
+			<result property="description" column="description" />
+		</association>
+	</resultMap>
+	
+	<select id="findEmpAndDept" resultMap="empDepAssoRM">
+		select emp_id,emp_name,gender,address,e.dept_id,d.dept_name,d.description from tbl_employee e
+			left join tbl_department d on e.dept_id=d.dept_id
+				where emp_name like '%${param1}%' and gender=#{param2}
+	</select>
+	
+	<select id="findEmpByDept" resultMap="empDepAssoRM">
+		select emp_id,emp_name,gender,address,e.dept_id,d.dept_name,d.description from tbl_employee e
+			left join tbl_department d on e.dept_id=d.dept_id
+				where d.dept_id=#{value}
+	</select>
+	
+	<resultMap type="com.djt.mapper.model.Employee" id="empLazyRM">
+		<id property="empId" column="emp_id" />
+		<result property="empName" column="emp_name" />
+		<result property="gender" column="gender" />
+		<result property="address" column="address" />
+		<association property="dept" fetchType="lazy" select="com.djt.mapper.dao.DepartmentMapper.findDeptById" column="dept_id">
+		</association>
+	</resultMap>
+	
+	<select id="findEmpLazyById" resultMap="empLazyRM">
+		select emp_id,emp_name,gender,address,dept_id from tbl_employee where emp_id=#{value}
+	</select>
+	
+</mapper>

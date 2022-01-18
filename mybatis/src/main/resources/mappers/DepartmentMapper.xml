@@ -1,0 +1,32 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.djt.mapper.dao.DepartmentMapper">
+	
+	<cache type="com.djt.mapper.comm.MybatisRedisCache"></cache>
+	
+	<resultMap type="com.djt.mapper.model.Department" id="deptRM">
+		<id property="deptId" column="dept_id" />
+		<result property="deptName" column="dept_name" />
+		<result property="description" column="description" />
+	</resultMap>
+	
+	<resultMap type="com.djt.mapper.model.Department" id="deptLazyRM">
+		<id property="deptId" column="dept_id" />
+		<result property="deptName" column="dept_name" />
+		<result property="description" column="description" />
+		<collection property="emps" fetchType="lazy" column="dept_id" select="com.djt.mapper.dao.EmployeeMapper.findEmpByDeptId"></collection>
+	</resultMap>
+	
+	<select id="findDeptById" resultMap="deptRM" useCache="true" flushCache="false">
+		select dept_id,dept_name,description from tbl_department where dept_id=#{value}
+	</select>
+	
+	<insert id="createDept">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="deptId" keyColumn="dept_id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into tbl_department(dept_name,description) values(#{deptName},#{description})
+	</insert>
+	
+</mapper>

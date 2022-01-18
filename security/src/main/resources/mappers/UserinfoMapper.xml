@@ -1,0 +1,21 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.djt.mvc.dao.UserinfoMapper">
+	
+	<resultMap type="com.djt.mvc.model.Userinfo" id="RMUserinfo">
+		<id property="userId" column="user_id" />
+		<result property="phone" column="phone" />
+		<result property="userName" column="user_name" />
+		<result property="birthday" column="birthday" />
+	</resultMap>
+	
+	<select id="findUserById" resultMap="RMUserinfo">
+		select user_id,phone,user_name,birthday from userinfo where user_id=#{id}
+	</select>
+	
+	<select id="findUserByCondition" resultMap="RMUserinfo">
+		select user_id,phone,user_name,birthday from userinfo where user_name like "%"#{userName}"%"
+	</select>
+	
+</mapper>

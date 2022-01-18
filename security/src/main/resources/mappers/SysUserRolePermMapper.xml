@@ -1,0 +1,56 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.djt.mvc.dao.SysUserRolePermMapper">
+	
+	<resultMap type="com.djt.mvc.model.SysUser" id="SysUserRM">
+		<id property="userId" column="user_id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="accountNonExpired" column="account_non_expired" />
+		<result property="accountNonLocked" column="account_non_locked" />
+		<result property="credentialsNonExpired" column="credentials_non_expired" />
+		<result property="enabled" column="enabled" />
+	</resultMap>
+	
+	<resultMap type="com.djt.mvc.model.SysRole" id="SysRoleRM">
+		<id property="roleId" column="role_id" />
+		<result property="roleName" column="role_name" />
+		<result property="roleTag" column="role_tag" />
+		<result property="roleDesc" column="role_desc" />
+	</resultMap>
+	
+	<resultMap type="com.djt.mvc.model.SysPermission" id="SysPermissionRM">
+		<id property="pmsId" column="pms_id" />
+		<result property="pmsName" column="pms_name" />
+		<result property="pmsUri" column="pms_uri" />
+	</resultMap>
+	
+	<select id="findUserByUsername" resultMap="SysUserRM">
+		select user_id,username,password,account_non_expired,account_non_locked,credentials_non_expired,enabled 
+			from sys_user where username=#{username}
+	</select>
+	
+	<select id="findRoleByUserId" resultMap="SysRoleRM">
+		select r.role_id,role_name,role_tag,role_desc from sys_role r
+			inner join sys_role_user ru on r.role_id=ru.role_id
+				where ru.user_id=#{user_id}
+	</select>
+	
+	<select id="findPermissionByUsername" resultMap="SysPermissionRM">
+		select distinct p.pms_id,p.pms_name,p.pms_uri from sys_pms p
+ 			left join sys_role_pms rp on p.pms_id=rp.pms_id
+ 			left join sys_role_user ru on ru.role_id=rp.role_id
+ 			left join sys_user u on u.user_id=ru.user_id
+ 				where u.username=#{username}
+	</select>
+	
+	<update id="updateUserPassword">
+		update sys_user set password=#{password} where username=#{username}
+	</update>
+	
+	
+	
+	
+	
+</mapper>

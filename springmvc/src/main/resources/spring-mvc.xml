@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd 
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+ 
+	<!-- bean definitions here -->
+	<context:component-scan base-package="com.djt.mvc3" />
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="102400" />
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<bean id="conversionServiceFactory" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" >
+		<property name="converters">
+			<list>
+				<bean class="com.djt.mvc3.convert.DateConvert" />
+			</list>
+		</property>
+	</bean>
+	
+	<mvc:annotation-driven conversion-service="conversionServiceFactory"></mvc:annotation-driven>
+ 
+	<mvc:view-controller path="/unit4" view-name="/unit4/index" />
+	<mvc:view-controller path="/user" view-name="/user/index" />
+	
+	<!-- 处理静态资源 第一种方式 -->
+	<!-- <mvc:default-servlet-handler /> -->
+	
+	<!-- 处理静态资源 第二种方式 -->
+	<mvc:resources location="/static/" mapping="/static/**" />
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="language" />
+	</bean>
+	
+	<!-- 国际化 配置session本地解析器 -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
+	
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+		<mvc:interceptor>
+			<mvc:mapping path="/local*" />
+			<bean class="com.djt.mvc3.interceptor.MyFirstInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+</beans>
