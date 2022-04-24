@@ -16,7 +16,7 @@ public class EmpController {
 	private IEmployeeService employeeService;
 
 	/**
-	 * 用来创建指定的员工信息
+	 * 用来创建指定员工信息
 	 * @return 返回所影响的行数
 	 */
 	@RequestMapping("/crt")
@@ -26,7 +26,7 @@ public class EmpController {
 	}
 
 	/**
-	 * 该方法是用来删除指定的员工信息
+	 * 该方法是用来删除指定员工信息
 	 * @return 返回所删除的函数
 	 */
 	@RequestMapping("/del")
