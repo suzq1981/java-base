@@ -28,7 +28,7 @@
 		select dept_id,dept_name,description,enable from tbl_department where dept_id=#{deptId} and enable=#{enable}
 	</select>
 	
-	<insert id="createDept">
+	<insert id="createDept" flushCache="true">
 		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="deptId" keyColumn="dept_id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
