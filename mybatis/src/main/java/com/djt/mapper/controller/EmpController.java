@@ -15,12 +15,20 @@ public class EmpController {
 	@Autowired
 	private IEmployeeService employeeService;
 
+	/**
+	 * 用来创建指定的员工信息
+	 * @return 返回所影响的行数
+	 */
 	@RequestMapping("/crt")
 	public int create() {
 		Employee emp = Employee.builder().empName("冯存钱").gender('M').address("浙江省绍兴市嘉善县").dept(Department.builder().deptId(2).build()).build();
 		return employeeService.createEmp(emp);
 	}
 
+	/**
+	 * 该方法是用来删除指定的员工信息
+	 * @return 返回所删除的行数
+	 */
 	@RequestMapping("/del")
 	public int delete() {
 		System.out.println("DDDDDDDDDDDDD");
