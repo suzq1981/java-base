@@ -27,8 +27,8 @@
 		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="empId" keyColumn="emp_id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into tbl_employee(emp_name,gender,address) 
-			values(#{empName},#{gender},#{address})
+		insert into tbl_employee(emp_name,gender,address,dept_id) 
+			values(#{empName},#{gender},#{address},#{dept.deptId})
 	</insert>
 	
 	<select id="countGender" parameterMap="cntEmpMap" statementType="CALLABLE">
@@ -66,6 +66,10 @@
 			</if>
 		 </where>
 	</select>
+	
+	<delete id="deleteEmpByName">
+		delete from tbl_employee where emp_name=#{value}
+	</delete>
 	
 	<delete id="deleteByBatch">
 		delete from tbl_employee where emp_id in

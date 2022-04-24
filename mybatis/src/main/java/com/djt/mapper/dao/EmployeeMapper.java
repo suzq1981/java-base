@@ -12,8 +12,6 @@ public interface EmployeeMapper {
 
 	Employee findEmpById(Integer empId);
 
-	int createEmp(Employee emp);
-
 	void countGender(Map parameter);
 	
 	List<Employee> findEmpByNameAndGender(String empName, char gender);
@@ -22,7 +20,11 @@ public interface EmployeeMapper {
 	
 	List<Employee> findEmpByDynamic(Employee emp);
 	
+	int deleteEmpByName(String empName);
+	
 	int deleteByBatch(List<Employee> emps);
+	
+	int createEmp(Employee emp);
 	
 	int createBatch(List<Employee> emps);
 	
