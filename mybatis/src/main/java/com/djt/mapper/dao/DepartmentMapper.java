@@ -11,4 +11,6 @@ public interface DepartmentMapper {
 
 	int createDept(Department dept);
 
+	Department findDeptByIdAndE(Integer deptId, Integer enable);
+
 }

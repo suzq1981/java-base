@@ -34,5 +34,7 @@ public interface EmployeeMapper {
 
 	Employee findEmpLazyById(Integer empId);
 	
+	Employee findEmpLazyById2(Integer empId);
+	
 	List<Employee> findEmpByDeptId(Integer deptId);
 }

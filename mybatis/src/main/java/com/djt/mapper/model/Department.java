@@ -21,5 +21,6 @@ public class Department implements Serializable {
 	private Integer deptId;
 	private String deptName;
 	private String description;
+	private Integer enable;
 	private List<Employee> emps;
 }

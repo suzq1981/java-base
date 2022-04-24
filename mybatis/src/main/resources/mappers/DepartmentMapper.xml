@@ -9,17 +9,23 @@
 		<id property="deptId" column="dept_id" />
 		<result property="deptName" column="dept_name" />
 		<result property="description" column="description" />
+		<result property="enable" column="enable" />
 	</resultMap>
 	
 	<resultMap type="com.djt.mapper.model.Department" id="deptLazyRM">
 		<id property="deptId" column="dept_id" />
 		<result property="deptName" column="dept_name" />
 		<result property="description" column="description" />
+		<result property="enable" column="enable" />
 		<collection property="emps" fetchType="lazy" column="dept_id" select="com.djt.mapper.dao.EmployeeMapper.findEmpByDeptId"></collection>
 	</resultMap>
 	
 	<select id="findDeptById" resultMap="deptRM" useCache="true" flushCache="false">
 		select dept_id,dept_name,description from tbl_department where dept_id=#{value}
+	</select>
+	
+	<select id="findDeptByIdAndE" resultMap="deptRM" flushCache="false">
+		select dept_id,dept_name,description,enable from tbl_department where dept_id=#{deptId} and enable=#{enable}
 	</select>
 	
 	<insert id="createDept">

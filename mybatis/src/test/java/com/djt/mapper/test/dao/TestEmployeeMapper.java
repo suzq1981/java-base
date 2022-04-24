@@ -94,23 +94,31 @@ public class TestEmployeeMapper {
 		List<Employee> emps = empMapper.findEmpAndDept("苏", 'F');
 		System.out.println(emps);
 	}
-	
+
 	@Test
-	public void testFindEmpByDept(){
+	public void testFindEmpByDept() {
 		List<Employee> emps = empMapper.findEmpByDept(1);
 		System.out.println(emps);
 	}
-	
+
 	@Test
-	public void testFindEmpLazyById(){
+	public void testFindEmpLazyById() {
 		Employee emp = empMapper.findEmpLazyById(1);
 		System.out.println(emp.getEmpName());
 		Department dept = emp.getDept();
 		System.out.println(dept.getDeptName());
 	}
-	
+
 	@Test
-	public void testFindEmpByDeptId(){
+	public void testFindEmpLazyById2() {
+		Employee emp = empMapper.findEmpLazyById2(1);
+		System.out.println(emp);
+		Department dept = emp.getDept();
+		System.out.println(dept);
+	}
+
+	@Test
+	public void testFindEmpByDeptId() {
 		List<Employee> emps = empMapper.findEmpByDeptId(1);
 		System.out.println(emps);
 	}

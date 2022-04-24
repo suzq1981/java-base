@@ -21,6 +21,7 @@ public class Employee implements Serializable {
 	private String empName;
 	private char gender;
 	private String address;
+	private Integer enable;
 	private Department dept;
 
 }
