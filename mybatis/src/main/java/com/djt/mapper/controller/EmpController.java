@@ -27,7 +27,7 @@ public class EmpController {
 
 	/**
 	 * 该方法是用来删除指定的员工信息
-	 * @return 返回所删除的行数
+	 * @return 返回所删除的函数
 	 */
 	@RequestMapping("/del")
 	public int delete() {
