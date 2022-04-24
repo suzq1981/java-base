@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.djt</groupId>
-	<artifactId>mapper</artifactId>
+	<artifactId>mybatis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<!-- 在此声明使用 spring boot （添加这个工程就变成了spring boot 应用） -->
 	<parent>
