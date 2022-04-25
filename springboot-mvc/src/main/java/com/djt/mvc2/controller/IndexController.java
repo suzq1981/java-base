@@ -69,7 +69,7 @@ public class IndexController {
 		return "locale";
 	}
 	
-	@RequestMapping("/locale2")
+	@RequestMapping("/mylocale")
 	public String local2(){
 		return "locale2";
 	}

@@ -14,7 +14,7 @@
 	</form>
 	<br>
 	<a href="${pageContext.request.contextPath }/unit2/headers">headers</a><br />
-	<a href="${pageContext.request.contextPath }/unit2/antpath/0/invoke">ant path</a><br />
+	<a href="${pageContext.request.contextPath }/unit2/antpath/good/invoke">ant path</a><br />
 	<a href="${pageContext.request.contextPath }/unit2/rest/9001">Rest</a><br />
 	<form action="${pageContext.request.contextPath }/unit2/delput/266478" method="post">
 		<input type="hidden" name="_method" value="put">

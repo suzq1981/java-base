@@ -41,6 +41,7 @@ public class Unit3Controller {
 
 	@ModelAttribute
 	public void testModelAttribute(Model model) {
+		System.out.println("Model: " + model.asMap());
 		PetDto pet = PetDto.builder().name("Pig").color("red").build();
 		model.addAttribute("pet", pet);
 		System.out.println("testModelAttribute 被执行了");

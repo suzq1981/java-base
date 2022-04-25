@@ -35,24 +35,27 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		configurer.setUseRegisteredSuffixPatternMatch(true);
 	}
 
+	//国际化
 	@Bean("messageSource")
 	public ResourceBundleMessageSource initMessageSource() {
-		System.out.println(basename);
+		System.out.println("basename: " + basename);
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename(basename);
 
 		return messageSource;
 	}
 
+	//中英文切换
 	@Bean("localeResolver")
-	public SessionLocaleResolver initLocaleResolver() {
+	public SessionLocaleResolver initSessionLocaleResolver() {
 		return new SessionLocaleResolver();
 	}
 
+	//中英文切换
 	@Bean
 	public LocaleChangeInterceptor initLocaleChangeInterceptor() {
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName("language");
+		localeChangeInterceptor.setParamName(basename);
 
 		return localeChangeInterceptor;
 	}
@@ -64,8 +67,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(initLocaleChangeInterceptor());
-		registry.addInterceptor(initMyFirstInterceptor()).addPathPatterns("/locale*");
+		//中英文切换
+		registry.addInterceptor(initLocaleChangeInterceptor()).addPathPatterns("/locale*");
+		registry.addInterceptor(initMyFirstInterceptor());
 	}
 
 	//

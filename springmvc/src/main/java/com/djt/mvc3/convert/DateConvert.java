@@ -10,13 +10,18 @@ public class DateConvert implements Converter<String, Date> {
 
 	@Override
 	public Date convert(String source) {
-		
+		SimpleDateFormat format = null;
 		if (source != null) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			format = new SimpleDateFormat("yyyy-MM-dd");
 			try {
 				return format.parse(source);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				format = new SimpleDateFormat("yyyy/MM/dd");
+				try {
+					return format.parse(source);
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
 		return null;

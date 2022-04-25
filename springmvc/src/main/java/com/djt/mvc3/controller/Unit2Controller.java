@@ -32,7 +32,7 @@ public class Unit2Controller {
 		return mv;
 	}
 
-	@RequestMapping(value = "/headers", headers = { "Referer=http://localhost:8080/mvc3/unit2" })
+	@RequestMapping(value = "/headers", headers = { "Referer=http://localhost:8080/springmvc/unit2" })
 	public ModelAndView headers() {
 		System.out.println("...........headers..........");
 		ModelAndView mv = new ModelAndView();

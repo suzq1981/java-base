@@ -7,8 +7,8 @@
 <title></title>
 </head>
 <body>
-	<a href="?language=zh_CN"><fmt:message key="language.cn" /></a>&nbsp;&nbsp;
-	<a href="?language=en_US"><fmt:message key="language.en" /></a>
+	<a href="?res=zh_CN"><fmt:message key="language.cn" /></a>&nbsp;&nbsp;
+	<a href="?res=en_US"><fmt:message key="language.en" /></a>
 	<h1><fmt:message key="welcome" /></h1>
 	<h2><fmt:message key="name" /></h2>
 	<fmt:formatNumber maxFractionDigits="2" value="12.09987"></fmt:formatNumber>
