@@ -54,7 +54,7 @@
 			<property name="paramName" value="language" />
 		</bean>
 		<mvc:interceptor>
-			<mvc:mapping path="/local*" />
+			<mvc:mapping path="/local*" /><!-- MyFirstInterceptor 指定拦截 /local* 匹配的处理器 -->
 			<bean class="com.djt.mvc3.interceptor.MyFirstInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

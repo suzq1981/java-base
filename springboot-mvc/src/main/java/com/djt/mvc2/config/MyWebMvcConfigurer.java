@@ -68,8 +68,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		//中英文切换
-		registry.addInterceptor(initLocaleChangeInterceptor()).addPathPatterns("/locale*");
-		registry.addInterceptor(initMyFirstInterceptor());
+		registry.addInterceptor(initLocaleChangeInterceptor());
+		//<!-- MyFirstInterceptor 指定拦截 /local* 匹配的处理器 -->
+		registry.addInterceptor(initMyFirstInterceptor()).addPathPatterns("/locale*");
 	}
 
 	//
