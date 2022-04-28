@@ -81,6 +81,9 @@ public class PriorityBlockingQueueDemo {
         //queue.add(null); //不允许添加null元素
         queue.put(new Demo(2, "c")); //实际调用了offer方法
         queue.offer(new Demo(4, "d"), 1, TimeUnit.SECONDS); //设定阻塞时间
+        queue.put(new Demo(6, "f"));
+        queue.put(new Demo(7, "g"));
+        queue.put(new Demo(5, "e"));
         System.out.println(queue);
 
         try {
@@ -88,6 +91,7 @@ public class PriorityBlockingQueueDemo {
             System.out.println(queue); //take之后才进行排序
             System.out.println("poll>>" + queue.poll());
             System.out.println("take2>>" + queue.take());
+            System.out.println(queue);
             System.out.println("take3>>" + queue.take());
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
@@ -176,8 +180,8 @@ public class PriorityBlockingQueueDemo {
 
     public static void main(String[] args) {
 		//testAdd();
-        //testTake1();
-		testTake2();
+        testTake1();
+//		testTake2();
 //		testTake3();
         //testTake4();
     }

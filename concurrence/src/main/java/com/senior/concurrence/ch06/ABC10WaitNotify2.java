@@ -17,13 +17,16 @@ public class ABC10WaitNotify2 extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             synchronized (preLock) {
                 synchronized (curlock) {
                     System.out.print(printChar);
+                    if(printChar.endsWith("C")){
+                    	System.out.print(" ");
+                    }
                     curlock.notify();
                 }
-                if (i < 9) {
+                if (i < 19) {
                     try {
                         preLock.wait();
                     } catch (InterruptedException e) {

@@ -1,6 +1,5 @@
 package com.senior.concurrence.ch06;
 
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 

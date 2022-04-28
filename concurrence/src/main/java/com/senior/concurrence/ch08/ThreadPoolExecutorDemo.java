@@ -17,9 +17,9 @@ public class ThreadPoolExecutorDemo {
 //		ThreadPoolExecutor executor = new ThreadPoolExecutor(3,3,0,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>(1),new CallerRunsPolicy());
 //		ThreadPoolExecutor executor = new ThreadPoolExecutor(3,3,0,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>(1),new DiscardOldestPolicy());
 //		ThreadPoolExecutor executor = new ThreadPoolExecutor(3,3,0,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>(1),new DiscardPolicy());
-		ThreadPoolExecutor executor = new ThreadPoolExecutor(3,3,0,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>(1),new MyPolicy());
+		//ThreadPoolExecutor executor = new ThreadPoolExecutor(3,3,0,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>(1),new MyPolicy());
 		
-		//ThreadPoolExecutor executor = new ThreadPoolExecutor(7,7,60L,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>());
+		ThreadPoolExecutor executor = new ThreadPoolExecutor(1,6,60L,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>(6));
 		for(int i=0;i<8;i++){
 			MyTask task = new MyTask(i);
 			executor.submit(task);

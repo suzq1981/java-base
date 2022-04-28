@@ -22,7 +22,7 @@ public class ABC10WaitNotify extends Thread {
                     System.out.print(printChar);
                     thisLock.notify();
                 }
-                preLock.notify();
+                //preLock.notify();
                 try {
                     if (i < 9)
                         preLock.wait();

@@ -21,6 +21,7 @@ public class UnsafeDemo {
 
         Unsafe unsafe = (Unsafe) field.get(null);
         long offset = unsafe.objectFieldOffset(UnsafeDemo.class.getDeclaredField("salary"));
+        System.out.println(offset);
 
         unsafe.putInt(demo, offset, 15000);
         System.out.println("William's salary is " + demo.getSalary());

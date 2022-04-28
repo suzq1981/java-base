@@ -128,11 +128,12 @@ public class TestDepartmentService {
 				MyThread myt = it.next();
 				Thread t = pool.map.get(myt);
 				if (t.getState() == Thread.State.TERMINATED) {
-					it.remove();
+					it.remove();//当并发加入后
 				} else {
 					if (System.currentTimeMillis() - myt.getStartTime() > 2500) {
 						if (t.getState() != Thread.State.TERMINATED) {
-							t.stop();
+							//t.stop();
+							t.interrupt();
 						}
 					}
 				}
