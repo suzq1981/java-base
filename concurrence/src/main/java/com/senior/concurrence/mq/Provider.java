@@ -26,7 +26,8 @@ public class Provider implements Runnable {
                 int value = atId.getAndIncrement();
                 Data data = new Data(value, String.valueOf(value));
                 System.out.println(name + " produce: " + data);
-                queue.offer(data, 2, TimeUnit.SECONDS);
+                //queue.offer(data, 2, TimeUnit.SECONDS);
+                queue.put(data);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

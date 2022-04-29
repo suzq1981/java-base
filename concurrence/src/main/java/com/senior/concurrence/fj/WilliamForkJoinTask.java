@@ -6,7 +6,9 @@ import java.util.concurrent.RecursiveTask;
 
 public class WilliamForkJoinTask extends RecursiveTask<Long> {
 
-    private Long start;
+	private static final long serialVersionUID = -3173696393332612405L;
+	
+	private Long start;
     private Long end;
     private Long factor;
 
@@ -18,20 +20,18 @@ public class WilliamForkJoinTask extends RecursiveTask<Long> {
 
     @Override
     protected Long compute() {
-        if (end - start < factor) {
-            Long total = 0L;
-            for (Long i = start; i <= end; i++) {
-                total += i;
-            }
-
-            return total;
-        } else {
-            WilliamForkJoinTask subTask1 = new WilliamForkJoinTask(start, (start + end) / 2, factor);
+        if (end - start >= factor) {
+        	WilliamForkJoinTask subTask1 = new WilliamForkJoinTask(start, (start + end) / 2, factor);
             subTask1.fork();
             WilliamForkJoinTask subTask2 = new WilliamForkJoinTask((start + end) / 2 + 1, end, factor);
             subTask2.fork();
-
             return subTask1.join() + subTask2.join();
+        } else {
+        	Long total = 0L;
+            for (Long i = start; i <= end; i++) {
+                total += i;
+            }
+            return total;
         }
     }
 

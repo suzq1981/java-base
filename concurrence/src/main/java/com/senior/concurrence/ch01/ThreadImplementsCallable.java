@@ -4,6 +4,7 @@ import com.senior.concurrence.entity.Account;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 public class ThreadImplementsCallable implements Callable<Account> {
 
@@ -28,7 +29,7 @@ public class ThreadImplementsCallable implements Callable<Account> {
         account.setAccountNo(this.accountNo);
         account.setAccountName("William");
         account.setValid(true);
-        Thread.sleep(3000);
+        TimeUnit.SECONDS.sleep(3);
 
         return account;
     }
@@ -41,7 +42,9 @@ public class ThreadImplementsCallable implements Callable<Account> {
 
         Thread thread = new Thread(task);
         thread.start();
+        TimeUnit.SECONDS.sleep(3);
 
+        System.out.println("获取数据......");
         Account account = task.get();
         System.out.println(account);
     }
