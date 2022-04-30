@@ -15,7 +15,7 @@ public class MessageMain0 {
         MessageEventFactory eventFactory = new MessageEventFactory();
         int bufferSize = 1024;
 
-        Disruptor disruptor = new Disruptor(eventFactory, bufferSize, Executors.defaultThreadFactory(),
+        Disruptor<Message> disruptor = new Disruptor<Message>(eventFactory, bufferSize, Executors.defaultThreadFactory(),
                 ProducerType.MULTI, new BlockingWaitStrategy());
         disruptor.setDefaultExceptionHandler(new MessageExceptionHandler());
 
@@ -30,11 +30,13 @@ public class MessageMain0 {
             tos[i] = new MessageEventHandlerTo();
         }
 
-        EventHandlerGroup baseGroup = disruptor.handleEventsWithWorkerPool(contents);
-        EventHandlerGroup fromGroup = baseGroup.thenHandleEventsWithWorkerPool(froms);
-        EventHandlerGroup toGroup = baseGroup.thenHandleEventsWithWorkerPool(tos);
-        fromGroup.and(toGroup);
-
+        EventHandlerGroup<Message> baseGroup = disruptor.handleEventsWithWorkerPool(contents);
+        
+        EventHandlerGroup<Message> fromGroup = baseGroup.thenHandleEventsWithWorkerPool(froms);
+        EventHandlerGroup<Message> toGroup = baseGroup.thenHandleEventsWithWorkerPool(tos);
+        EventHandlerGroup<Message> fromAndToGroup = fromGroup.and(toGroup);
+        fromAndToGroup.thenHandleEventsWithWorkerPool(new MessageEventHandlerMail());
+        
         disruptor.start();
 
         RingBuffer<Message> ringBuffer = disruptor.getRingBuffer();
