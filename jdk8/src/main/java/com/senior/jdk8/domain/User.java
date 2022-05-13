@@ -9,7 +9,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-    private String name;
-    private Integer age;
+public class User implements Comparable<User> {
+
+	private String name;
+	private Integer age;
+
+	@Override
+	public int compareTo(User o) {
+		return this.getName().compareToIgnoreCase(o.getName());
+	}
+
 }
