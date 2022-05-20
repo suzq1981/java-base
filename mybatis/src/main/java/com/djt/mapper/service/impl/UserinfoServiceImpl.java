@@ -11,6 +11,8 @@ import com.djt.mapper.dao.UserinfoMapper;
 import com.djt.mapper.dto.UserinfoDto;
 import com.djt.mapper.model.Userinfo;
 import com.djt.mapper.service.IUserinfoService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Service("userinfoService")
 public class UserinfoServiceImpl implements IUserinfoService {
@@ -25,8 +27,6 @@ public class UserinfoServiceImpl implements IUserinfoService {
 		if (StringUtils.isEmpty(condition.getUserName())) {
 			return result;
 		}
-		
-		System.out.println(userinfoMapper);
 
 		result = userinfoMapper.findUserByCondition(condition);
 
@@ -38,6 +38,19 @@ public class UserinfoServiceImpl implements IUserinfoService {
 		Userinfo userinfo = userinfoMapper.findUserById(userId);
 
 		return userinfo;
+	}
+
+	@Override
+	public PageInfo<Userinfo> pageUserByCondition(UserinfoDto condition, int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+
+		if (StringUtils.isEmpty(condition.getUserName())) {
+			return new PageInfo<>();
+		}
+
+		List<Userinfo> list = userinfoMapper.findUserByCondition(condition);
+
+		return new PageInfo<>(list, pageSize);
 	}
 
 }
